@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { DoctorFormData } from "../../../libs/types";
+import { DoctorFormData } from "../../../../lib/types";
 
 export default function DoctorCreate() {
   const router = useRouter();

@@ -11,9 +11,8 @@ import jwt from 'jsonwebtoken';
 let router = express.Router();
 
 router.get(
-  "/", function(req, res){
-    console.log("Backend: Med_App - Ativo");
-    res.status(200).json({message: "Backend: Med_App"});
+  "/", verifyToken, function(req, res){
+    res.status(200).json({message: "Backend: Med_App", doctorId: req.doctorId});
   }
 );
 
@@ -36,7 +35,15 @@ router.post('/login', async (req, res) =>{
       expiresIn: '1h',
     });
 
-    res.status(200).json({token});
+    res
+      .cookie('token', token, {
+        httpOnly: true,
+        secure: false, // só funciona via HTTPS
+        sameSite: 'strict', // evitar envio entre domínios
+        maxAge: 60 * 60 * 1000 // 1hr
+      })
+      .status(200)    
+      .json({message: 'Login bem-sucedido.'});
   } catch (error) {
     console.log(error);
     res.status(500).json({error: 'Login failed!'})

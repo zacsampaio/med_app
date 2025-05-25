@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Doctor, Patient } from "../../../libs/types";
+import { Doctor, Patient } from "../../../lib/types";
 
 export default function AppointmentCreate() {
   const router = useRouter();

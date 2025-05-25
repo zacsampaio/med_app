@@ -3,14 +3,20 @@ import pkg from "body-parser";
 import router from "./routes/router.js";
 import cors from "cors";
 import db from './database/database.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const { json, urlencoded} = pkg;
 
 app.use(json());
 app.use(urlencoded({extended: true}));
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
+app.use(cookieParser());
 app.use("/", router);
+
 
 db.once("open", function () {
   console.log("Database connected successfully!");

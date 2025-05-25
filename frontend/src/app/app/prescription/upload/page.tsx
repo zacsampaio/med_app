@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Prescription } from "../../../libs/types";
+import { Prescription } from "../../../../lib/types";
 
 export default function PrescriptionCreate() {
 

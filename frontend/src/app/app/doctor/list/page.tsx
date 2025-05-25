@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Doctor } from "../../../libs/types";
+import { Doctor } from "../../../../lib/types";
 
 export default function DoctorList() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
