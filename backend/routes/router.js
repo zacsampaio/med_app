@@ -12,8 +12,8 @@ let router = express.Router();
 
 router.get(
   "/", function(req, res){
-    console.log("Hi!");
-    res.status(200).json({message: "Hi!"});
+    console.log("Backend: Med_App - Ativo");
+    res.status(200).json({message: "Backend: Med_App"});
   }
 );
 
