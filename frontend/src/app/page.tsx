@@ -51,7 +51,10 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="grid min-h-screen grid-cols-2 antialiased">
+      <div>
+        
+      </div>
       <form className="w-full" onSubmit={authentication}>
         <span className="font-bold text-blue-500 py-2 block text-2xl">
           Login

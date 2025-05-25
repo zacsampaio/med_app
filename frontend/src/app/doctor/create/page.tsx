@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { DoctorFormData } from "../../types";
+import { DoctorFormData } from "../../../libs/types";
 
 export default function DoctorCreate() {
   const router = useRouter();
@@ -89,7 +89,7 @@ export default function DoctorCreate() {
           <div>
             {error && (
               <div
-                className="p-2 text-white border-[1px] border-gray-200 p-2 rounded-sm bg-red-400"
+                className="text-white border-[1px] border-gray-200 p-2 rounded-sm bg-red-400"
                 style={{ color: "red" }}
               >
                 {error}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import Link from "next/link";
-import { FakeApiUser } from "../types";
+import { FakeApiUser } from "../../libs/types";
 
 export default function FakeApi() {
 
