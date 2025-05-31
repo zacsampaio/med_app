@@ -31,19 +31,19 @@ router.post('/login', async (req, res) =>{
       return res.status(401).json({error: "Authentication failed!"})
     }
 
-    const token = jwt.sign({doctorId: doctor._id}, "you-secret-key", {
+    const token = jwt.sign({doctorId: doctor._id}, process.env.SECRET_KEY, {
       expiresIn: '1h',
     });
 
     res
       .cookie('token', token, {
         httpOnly: true,
-        secure: false, // só funciona via HTTPS
-        sameSite: 'strict', // evitar envio entre domínios
+        secure: process.env.NODE_ENV === 'production', // só funciona via HTTPS
+        sameSite: 'lax', // evitar envio entre domínios
         maxAge: 60 * 60 * 1000 // 1hr
       })
       .status(200)    
-      .json({message: 'Login bem-sucedido.'});
+      .json({message: 'Login bem-sucedido.', token});
   } catch (error) {
     console.log(error);
     res.status(500).json({error: 'Login failed!'})

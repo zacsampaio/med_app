@@ -1,24 +1,21 @@
-'use client'
+"use client";
 import Link from "next/link";
-import { api } from "@/lib/axios";
-import { useEffect } from 'react'
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const router = useRouter()
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await api.get("/");
-      } catch {
-        router.replace("/auth/sign-in");
-      }
-    };
+    if (status === "loading") return; // espera carregar
 
-    checkAuth()
-  }, [router]);
+    if (!session) {
+      router.replace("/auth/sign-in");
+    }
+  }, [session, status, router]);
+
 
   return (
     <>

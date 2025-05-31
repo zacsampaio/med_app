@@ -14,8 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Med_App",
+  title: "med.app",
   description: "App Web - Gerenciador Médico",
+  icons: {
+    icon: "/favicon.svg",}
 };
 
 export default function RootLayout({

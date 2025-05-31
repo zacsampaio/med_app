@@ -4,6 +4,9 @@ import router from "./routes/router.js";
 import cors from "cors";
 import db from './database/database.js';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const { json, urlencoded} = pkg;

@@ -7,19 +7,17 @@ export default function AuthLauout({
 }: {
   children: React.ReactNode;
 }) {
-  
-
   return (
     <ThemeProvider>
       <div className="grid min-h-screen grid-cols-2 antialiased">
-        <div className="h-full p-10 border-r border-foreground/5 bg-primary-foreground text-secondary-foreground  flex flex-col justify-between">
+        <div className="h-full flex flex-col justify-between p-10 border-r border-foreground/5 bg-primary-foreground text-secondary-foreground  ">
           <div className="flex items-center gap-3 text-lg font-medium text-foreground">
             <Stethoscope />
             <span className="font-semibold">med.app</span>
           </div>
 
           <footer className="text-sm">
-            Sistemas de Consulta &copy; med.app - {new Date().getFullYear()}
+            Sistema de Consulta &copy; med.app - {new Date().getFullYear()}
           </footer>
         </div>
 

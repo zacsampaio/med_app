@@ -6,12 +6,17 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { toast } from "sonner";
-import { signIn, SignInBody } from "@/api/sign-in";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+
+export interface SignInBody {
+  login: string
+  password: string
+}
+
 
 export default function SignIn() {
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     register,
@@ -19,19 +24,23 @@ export default function SignIn() {
     formState: { isSubmitting },
   } = useForm<SignInBody>();
 
-  const { mutateAsync: authenticate } = useMutation({
-    mutationFn: signIn,
-  });
-
   async function handleSignIn(data: SignInBody) {
-    try {
-      await authenticate(data);
-      toast.success("Login realizado com sucesso!");
-      router.push('/')
-    } catch {
+    const result = await signIn("credentials", {
+      redirect: false,
+      login: data.login,
+      password: data.password,
+    });
+
+    console.log(result);
+
+    if (result?.error) {
       toast.error("Credenciais inválidas.");
+    } else {
+      toast.success("Login realizado com sucesso!");
+      router.push("/");
     }
   }
+  
 
   return (
     <>
