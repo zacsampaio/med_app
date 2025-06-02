@@ -1,4 +1,4 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 import Patient from "./Patient.js"
 import Doctor from "./Doctor.js"
 

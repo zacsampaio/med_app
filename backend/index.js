@@ -1,10 +1,14 @@
 import express from 'express';
 import pkg from "body-parser";
-import router from "./routes/router.js";
 import cors from "cors";
 import db from './database/database.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+
+import privateRoutes from './routes/router.js';
+import authRoutes from './routes/auth/authRoutes.js';
+
+
 
 dotenv.config();
 
@@ -18,7 +22,12 @@ app.use(cors({
   credentials: true,
 }));
 app.use(cookieParser());
-app.use("/", router);
+
+//Rotas públicas
+app.use("/auth", authRoutes);
+
+//Rotas privadas
+app.use("/api", privateRoutes);
 
 
 db.once("open", function () {

@@ -10,10 +10,9 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export interface SignInBody {
-  login: string
-  password: string
+  login: string;
+  password: string;
 }
-
 
 export default function SignIn() {
   const router = useRouter();
@@ -40,13 +39,12 @@ export default function SignIn() {
       router.push("/");
     }
   }
-  
 
   return (
     <>
       <div className="align-center absolute top-8 right-48">
         <Button variant={"ghost"} asChild className="absolute left-14">
-          <Link href="/sign-up">Novo Acesso</Link>
+          <Link href="/auth/sign-up">Novo Acesso</Link>
         </Button>
         <ThemeToggle />
       </div>

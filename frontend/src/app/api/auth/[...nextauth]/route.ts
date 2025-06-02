@@ -19,7 +19,7 @@ const handler = NextAuth({
         if (!credentials?.login || !credentials?.password) return null;
 
         // Faz a requisição diretamente no backend Express
-        const response = await fetch("http://localhost:3001/login", {
+        const response = await fetch("http://localhost:3001/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -35,7 +35,7 @@ const handler = NextAuth({
 
         // Retorna o objeto do usuário que será salvo no token JWT
         const user: CustomUser = {
-          id: data.id, // Pode usar algum ID real aqui, se tiver
+          id: "IdLogin", // Pode usar algum ID real aqui, se tiver
           login: credentials.login,
           token: data.token,
         };
