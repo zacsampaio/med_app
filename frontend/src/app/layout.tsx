@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+
 import { Providers } from "@/components/provider";
+
+
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +20,8 @@ export const metadata: Metadata = {
   title: "med.app",
   description: "App Web - Gerenciador Médico",
   icons: {
-    icon: "/favicon.svg",}
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

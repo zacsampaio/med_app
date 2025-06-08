@@ -7,17 +7,25 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Sidebar } from "@/components/sidebar";
 
 
-export default function Home() {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "loading") return; // espera carregar
+    if (status === "loading") return;
 
     if (!session) {
       router.replace("/auth/sign-in");
     }
   }, [session, status, router]);
+
+  if (status === "loading") {
+    return <div>Carregando...</div>;
+  }
+
+  if (!session) {
+    return null;
+  }
 
   return (
     <>
@@ -28,7 +36,7 @@ export default function Home() {
           className="flex-1 px-6 py-4 border-l"
           style={{ height: "calc(100vh - 4.5rem)" }}
         >
-          <div className="">Dashboard</div>
+          {children}
 
           <div className="absolute bottom-16 right-16">
             <ThemeToggle />
