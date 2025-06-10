@@ -30,8 +30,6 @@ export default function SignIn() {
       password: data.password,
     });
 
-    console.log(result);
-
     if (result?.error) {
       toast.error("Credenciais inválidas.");
     } else {
@@ -61,7 +59,12 @@ export default function SignIn() {
             <Input id="login" {...register("login")} />
 
             <Label htmlFor="password">Senha</Label>
-            <Input id="password" type="password" {...register("password")} />
+            <Input
+              id="password"
+              type="password"
+              autoComplete="new-password"
+              {...register("password")}
+            />
           </div>
           <Button
             type="submit"

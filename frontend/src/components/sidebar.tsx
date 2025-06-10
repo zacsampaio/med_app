@@ -4,7 +4,8 @@ import { Separator } from "./ui/separator";
 
 export function Sidebar() {
   return (
-    <aside className="flex flex-col gap-4 w-[200px] h-full mt-2 p-4">
+    <aside className="flex flex-col gap-4 w-[200px] h-full p-4">
+      <h2></h2>
       <Link href="/app/doctor/list">Doutores</Link>
       <Separator />
       <Link href="/app/patient/create">Adicionar Pacientes</Link>
