@@ -26,8 +26,8 @@ import Link from "next/link";
 
 export function SideMenu() {
   return (
-    <Sidebar className="bg-sidebar p-4">
-      <SidebarHeader className="flex flex-row items-center gap-10">
+    <Sidebar className="bg-sidebar p-2">
+      <SidebarHeader className="flex flex-row items-center gap-8">
         <Stethoscope className="h-8 w-8" />
         <h3 className="text-lg font-semibold">med.app</h3>
       </SidebarHeader>
@@ -52,7 +52,7 @@ export function SideMenu() {
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                <SidebarMenu className="ml-4 ">
+                <SidebarMenu className="ml-2 ">
                   <SidebarMenuItem>
                     <Link href="/app/appointments/create">
                       <SidebarMenuButton className="cursor-pointer">
@@ -91,7 +91,7 @@ export function SideMenu() {
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                <SidebarMenu className="ml-4">
+                <SidebarMenu className="ml-2">
                   <SidebarMenuItem>
                     <Link href="/app/prescriptions/create">
                       <SidebarMenuButton className="cursor-pointer">
@@ -109,7 +109,7 @@ export function SideMenu() {
                   <SidebarMenuItem>
                     <Link href="/app/prescriptions/upload">
                       <SidebarMenuButton className="cursor-pointer">
-                        Upload Prescrição
+                        Carregar Prescrição
                       </SidebarMenuButton>
                     </Link>
                   </SidebarMenuItem>
@@ -130,7 +130,7 @@ export function SideMenu() {
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                <SidebarMenu className="ml-4">
+                <SidebarMenu className="ml-2">
                   <SidebarMenuItem>
                     <Link href="/app/patient/create">
                       <SidebarMenuButton className="cursor-pointer">
