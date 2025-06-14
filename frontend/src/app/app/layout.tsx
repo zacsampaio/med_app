@@ -2,9 +2,9 @@
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { SideMenu } from "@/components/sideMenu";
 import { SignOut } from "@/components/singOut";
 import ProtectedRoute from "../auth/ProtectedRoute";
+import { SidebarComponent } from "@/components/sidebarComponent";
 
 const routeLabels: Record<string, string> = {
   appointments: "Consultas",
@@ -28,7 +28,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <ProtectedRoute>
       <SidebarProvider className="flex h-full flex-col">
         <div className="flex">
-          <SideMenu />
+          <SidebarComponent />
           <main className="flex-1 px-6 py-2">
             <header className="flex gap-4 text-accent-foreground border-b h-14 items-center w-full">
               <SidebarTrigger />
