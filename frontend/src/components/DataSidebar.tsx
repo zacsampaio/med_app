@@ -60,7 +60,7 @@ export const SIDEBAR: SidebarItem[] = [
   },
 ];
 
-export function SidebarComponent() {
+export function DataSidebar() {
 
   return (
     <Sidebar className="bg-sidebar p-2">

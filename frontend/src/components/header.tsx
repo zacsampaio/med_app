@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SignOut } from "./singOut";
+import { SignOut } from "./SignOut";
 
 export function Header() {
   return (

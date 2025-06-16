@@ -1,16 +1,16 @@
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { SignOut } from "@/components/singOut";
+import { SignOut } from "@/components/SignOut";
 import ProtectedRoute from "./auth/ProtectedRoute";
-import { SidebarComponent } from "@/components/sidebarComponent";
+import { DataSidebar } from "@/components/DataSidebar";
 
 export default function Home() {
   return (
     <ProtectedRoute>
       <SidebarProvider className="flex h-full flex-col">
         <div className="flex">
-          <SidebarComponent />
+          <DataSidebar />
           <main className="flex-1 px-6 py-2">
             <header className="flex gap-4 text-accent-foreground border-b h-14 items-center w-full">
               <SidebarTrigger />

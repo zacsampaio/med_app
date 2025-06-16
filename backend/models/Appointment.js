@@ -1,42 +1,47 @@
 import mongoose from "mongoose";
-import Patient from "./Patient.js"
-import Doctor from "./Doctor.js"
+import Patient from "./Patient.js";
+import Doctor from "./Doctor.js";
 
 const Schema = mongoose.Schema;
 
-const appointmentSchema = new Schema ({
-  date: {
-    type: Date,
-    require: [true, 'Appointment Date is required.']
-  },
-  doctorId: {
-    type: String,
-    required: [true, "DoctorId is required."],
-    validate: {
-      validator: function (v){
-        const id = new mongoose.Types.ObjectId(v); //convertendo uma string em objeto ID para ser encontrado no banco
-        return Doctor.exists({_id: id});
-      },
-      message: props => `DoctorID: ${props.value} not found.`
-    }
-  },
-  patientId: {
-    type: String,
-    required: [true, "PatientId is required."],
-    validate: {
-      validator: function (v){
-        const id = new mongoose.Types.ObjectId(v); //convertendo uma string em objeto ID para ser encontrado no banco
-        return Patient.exists({_id: id});
-      },
-      message: props => `PatientID: ${props.value} not found.`
-    }
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+const appointmentSchema = new Schema(
+  {
+    date: {
+      type: Date,
+      required: [true, "Appointment Date is required."],
+    },
 
-const appointment = mongoose.model('Appointment', appointmentSchema);
+    doctorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Doctor",
+      required: [true, "DoctorId is required."],
+      validate: {
+        validator: async (v) => await Doctor.exists({ _id: v }),
+        message: (props) => `DoctorID: ${props.value} not found.`,
+      },
+    },
 
-export default appointment;
+    patientId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Patient",
+      required: [true, "PatientId is required."],
+      validate: {
+        validator: async (v) => await Patient.exists({ _id: v }),
+        message: (props) => `PatientID ${props.value} not found.`,
+      },
+    },
+
+    status: {
+      type: String,
+      enum: ["scheduled", "in_progress", "completed", "cancelled"],
+      default: "scheduled",
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+appointmentSchema.index({ date: 1, doctorId: 1 });
+appointmentSchema.index({ status: 1 });
+
+export default mongoose.model("Appointment", appointmentSchema);

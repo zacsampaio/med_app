@@ -1,9 +1,10 @@
 // routes/router.js (rotas privadas)
 import express from 'express';
-import appointmentController from "./AppointmentController.js";
-import doctorController from "./DoctorController.js";
-import patientController from "./PatientController.js";
-import prescriptionController from "./PrescriptionController.js";
+import appointments from "./appointments.js";
+import doctors from "./doctors.js";
+import patients from "./patients.js";
+import prescriptions from "./prescriptions.js";
+import specialties from "./specialties.js"
 import verifyToken from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -14,9 +15,10 @@ router.get("/", verifyToken, (req, res) => {
 
 router.use(verifyToken);
 
-router.use("/", appointmentController);
-router.use("/", doctorController);
-router.use("/", patientController);
-router.use("/", prescriptionController);
+router.use("/appointments", appointments);
+router.use("/specialties", specialties);
+router.use("/", doctors);
+router.use("/", patients);
+router.use("/", prescriptions);
 
 export default router;

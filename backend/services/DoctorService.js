@@ -1,3 +1,4 @@
+import Doctor from "../models/Doctor.js";
 import DoctorRepository from "../repositories/DoctorRepository.js";
 
 const getAllDoctors = async () => {
@@ -8,12 +9,12 @@ const getDoctor = async (id) => {
   return DoctorRepository.getDoctor(id);
 }
 
-const saveDoctor = async ({name, login, password, medicalSpecialty, medicalRegistration, email, phone}) => {
-  return DoctorRepository.saveDoctor({name, login, password, medicalSpecialty, medicalRegistration, email, phone});
+const saveDoctor = async ({name, login, password, specialtyId, medicalRegistration, email, phone, status}) => {
+  return DoctorRepository.saveDoctor({name, login, password, specialtyId, medicalRegistration, email, phone, status});
 }
 
-const updateDoctor = async (id, {name, login, password, medicalSpecialty, medicalRegistration, email, phone}) => {
-  return DoctorRepository.updateDoctor(id, {name, login, password, medicalSpecialty, medicalRegistration, email, phone});
+const updateDoctor = async (id, {name, login, password, specialtyId, medicalRegistration, email, phone, status}) => {
+  return DoctorRepository.updateDoctor(id, {name, login, password, specialtyId, medicalRegistration, email, phone, status});
 }
 
 const deleteDoctor = async (id) => {
@@ -23,7 +24,7 @@ const deleteDoctor = async (id) => {
 // Login
 
 const getDoctorByLogin = async(login) =>{
-  return await DoctorRepository.getDoctorByLogin(login);
+  return Doctor.findOne({ login }).select("+password");
 }
 
 
