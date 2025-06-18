@@ -6,17 +6,29 @@ const AuthController = {
   async login(req, res) {
     try {
       const { login, password } = req.body;
-      const token = await AuthService.login({login, password});
+
+      const {
+        id,
+        login: loginName,
+        token,
+        expiresIn,
+      } = await AuthService.login({ login, password });
 
       res
         .cookie("token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "lax",
-          maxAge: 60 * 60 * 1000,
+          maxAge: expiresIn * 1000,
         })
         .status(200)
-        .json({ message: "Login bem-sucedido.", token});
+        .json({
+          id,
+          login: loginName,
+          token,
+          expiresIn,
+          message: "Login bem-sucedido.",
+        });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

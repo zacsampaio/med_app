@@ -1,13 +1,19 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { env } from "../../../../../env";
 
-interface CustomUser {
+interface BackendLoginResponse {
   id: string;
   login: string;
   token: string;
+  expiresIn: number;
 }
 
-const handler = NextAuth({
+interface CustomUser extends BackendLoginResponse {
+  accessTokenExpires: number;
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -18,53 +24,63 @@ const handler = NextAuth({
       async authorize(credentials) {
         if (!credentials?.login || !credentials?.password) return null;
 
-        // Faz a requisição diretamente no backend Express
-        const response = await fetch("http://localhost:3001/auth/login", {
+        const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            login: credentials.login,
-            password: credentials.password,
-          }),
-          credentials: "include",
+          body: JSON.stringify(credentials),
         });
 
-        if (!response.ok) return null;
+        if (!res.ok) return null;
+        const data: BackendLoginResponse = await res.json();
 
-        const data = await response.json();
-
-        // Retorna o objeto do usuário que será salvo no token JWT
         const user: CustomUser = {
-          id: "IdLogin", // Pode usar algum ID real aqui, se tiver
-          login: credentials.login,
-          token: data.token,
+          ...data,
+          accessTokenExpires: Date.now() + data.expiresIn * 1000,
         };
 
         return user;
       },
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
+
+  session: { strategy: "jwt" },
+
   callbacks: {
+    // Grava os dados no token do NextAuth e não no JWT do backend!
     async jwt({ token, user }) {
       if (user) {
-        token.accessToken = user.token;
-        token.login = user.login;
+        token.id = (user as CustomUser).id;
+        token.login = (user as CustomUser).login;
+        token.accessToken = (user as CustomUser).token;
+        token.accessTokenExpires = (user as CustomUser).accessTokenExpires;
       }
+
+      if (Date.now() > (token.accessTokenExpires as number)) {
+        token.error = "TokenExpired" // Desloga se o token expirar, tornando o getSession() null!
+      }
+
       return token;
     },
+
     async session({ session, token }) {
-      session.user = {
-        ...session.user,
-        login: token.login,
-        token: token.accessToken,
-      };
+      if (token?.accessToken) {
+        session.user = {
+          ...session.user,
+          id: token.id as string,
+          login: token.login as string,
+          token: token.accessToken as string,
+        };
+        session.expires = new Date(
+          token.accessTokenExpires as number
+        ).toISOString();
+      }
+
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
-});
 
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

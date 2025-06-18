@@ -2,6 +2,8 @@ import doctorService from "./DoctorService.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+const ONE_HOUR_IN_SECONDS = 60 * 60;
+
 const AuthService = {
   async login({ login, password }) {
     const doctor = await doctorService.getDoctorByLogin(login);
@@ -15,10 +17,15 @@ const AuthService = {
     }
 
     const token = jwt.sign({ doctorId: doctor._id }, process.env.SECRET_KEY, {
-      expiresIn: "1h",
+      expiresIn: ONE_HOUR_IN_SECONDS,
     });
 
-    return token;
+    return {
+      id: doctor._id,
+      login: doctor.login,
+      token,
+      expiresIn: ONE_HOUR_IN_SECONDS,
+    };
   },
 
   async registerDoctor(doctorData) {
