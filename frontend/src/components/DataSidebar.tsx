@@ -29,14 +29,10 @@ export type SidebarItem =
 export const SIDEBAR: SidebarItem[] = [
   { type: "link", label: "DASHBOARD", href: "/", icon: LayoutDashboard },
   {
-    type: "group",
+    type: "link",
     label: "CONSULTAS",
+    href: "/app/appointments",
     icon: ClipboardPlus,
-    children: [
-      { label: "Listagem", href: "/app/appointments" },
-      { label: "Consulta detalhada", href: "/app/appointments/create" },
-      { label: "Gerar Relatório", href: "/app/appointments/report" },
-    ],
   },
   {
     type: "group",

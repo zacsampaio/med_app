@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export interface SignInBody {
   login: string;
@@ -16,6 +17,7 @@ export interface SignInBody {
 
 export default function SignIn() {
   const router = useRouter();
+  const { status } = useSession();
 
   const {
     register,
@@ -37,6 +39,10 @@ export default function SignIn() {
       router.push("/");
     }
   }
+
+  useEffect(() => {
+    if (status === "authenticated") router.replace("/");
+  }, [router, status]);
 
   return (
     <>

@@ -33,7 +33,7 @@ export interface Prescription {
 
 export interface Appointment {
   _id: string;
-  date?: string | null;
+  date: Date | null;
   doctorId: string | Doctor | null;
   patientId: string | Patient | null;
   status: string;

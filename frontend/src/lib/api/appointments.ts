@@ -1,21 +1,31 @@
 import { apiClient } from "../axiosClient";
 import { Appointment } from "../types";
 
+function parseAppointment(raw: unknown): Appointment {
+  const dto = raw as Appointment;
+  return {
+    ...dto,
+    date: dto.date ? new Date(dto.date) : null,
+  }
+}
+
+
+
 
 export const AppointmentsAPI = {
   list: async (): Promise<Appointment[]> => {
     const { data } = await apiClient.get<Appointment[]>("/appointments");
-    return data;
+    return data.map(parseAppointment);
   },
 
   getById: async (id: string) => {
     const { data } = await apiClient.get<Appointment>(`/appointments/${id}`);
-    return data;
+    return parseAppointment(data);
   },
 
   create: async (payload: Omit<Appointment, "id">) => {
     const { data } = await apiClient.post("/appointments", payload);
-    return data;
+    return parseAppointment(data);
   },
 
   update: async (id: string, payload: Partial<Omit<Appointment, "id">>) => {
@@ -23,18 +33,18 @@ export const AppointmentsAPI = {
       `/appointments/${id}`,
       payload
     );
-    return data;
+    return parseAppointment(data);
   },
 
   delete: async (id: string) => {
     await apiClient.delete(`/appointments/${id}`);
   },
 
-  reschedule: async (id: string, date: string) => {
+  reschedule: async (id: string, date: string, status: string) => {
     const { data } = await apiClient.patch<Appointment>(
       `/appointments/${id}/reschedule`,
-      { date }
+      { date, status }
     );
-    return data;
+    return parseAppointment(data);
   },
 } as const;

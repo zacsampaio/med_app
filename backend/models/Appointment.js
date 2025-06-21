@@ -33,7 +33,7 @@ const appointmentSchema = new Schema(
 
     status: {
       type: String,
-      enum: ["scheduled", "in_progress", "completed", "cancelled"],
+      enum: ["scheduled", "in_progress", "completed", "cancelled", "rescheduled"],
       default: "scheduled",
       required: true,
     },
