@@ -1,16 +1,23 @@
 import { apiClient } from "../axiosClient";
-import { Appointment } from "../types";
+import { Appointment, Doctor, Patient } from "../types";
+
+export interface GetAppointmentsResponse {
+  appointments: {
+    _id: string;
+    date: Date | null;
+    doctorId: string | Doctor | null;
+    patientId: string | Patient | null;
+    status: string;
+  }[];
+}
 
 function parseAppointment(raw: unknown): Appointment {
   const dto = raw as Appointment;
   return {
     ...dto,
     date: dto.date ? new Date(dto.date) : null,
-  }
+  };
 }
-
-
-
 
 export const AppointmentsAPI = {
   list: async (): Promise<Appointment[]> => {
