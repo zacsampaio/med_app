@@ -135,7 +135,7 @@ export function DataTableRow({ appointment }: DataTableAppointment) {
         )}
       </TableCell>
       <TableCell>
-        <DataTableReschedule _id={appointment._id} />
+        <DataTableReschedule appointment={appointment}/>
       </TableCell>
       <TableCell>
         {!(appointment.status === "completed") && (

@@ -1,5 +1,5 @@
 import { apiClient } from "../axiosClient";
-import { Appointment, Doctor, Patient } from "../types";
+import { Appointment, AppointmentCreateDTO, Doctor, Patient } from "../types";
 
 export interface GetAppointmentsResponse {
   appointments: {
@@ -30,7 +30,7 @@ export const AppointmentsAPI = {
     return parseAppointment(data);
   },
 
-  create: async (payload: Omit<Appointment, "id">) => {
+  create: async (payload: AppointmentCreateDTO) => {
     const { data } = await apiClient.post("/appointments", payload);
     return parseAppointment(data);
   },

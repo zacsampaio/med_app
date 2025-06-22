@@ -38,3 +38,10 @@ export interface Appointment {
   patientId: string | Patient | null;
   status: string;
 }
+
+export interface AppointmentCreateDTO {
+  date: string;
+  doctorId: string | Doctor | null;
+  patientId: string | Patient | null ;
+  status: string;
+}
